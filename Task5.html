@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .error-message {
+            color: red;
+            font-size: 14px;
+        }
+
+        .error-border {
+            border: 1px solid red;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            var name = document.getElementById("name");
+            var email = document.getElementById("email");
+            var website = document.getElementById("website");
+            var message = document.getElementById("message");
+            var errorFlag = false;
+
+            if (name.value === "") {
+                document.getElementById("name-error").innerHTML = "This field is required";
+                name.classList.add("error-border");
+                errorFlag = true;
+            } else {
+                document.getElementById("name-error").innerHTML = "";
+                name.classList.remove("error-border");
+            }
+
+            if (email.value === "") {
+                document.getElementById("email-error").innerHTML = "A valid email address is required";
+                email.classList.add("error-border");
+                errorFlag = true;
+            } else if (!validateEmail(email.value)) {
+                document.getElementById("email-error").innerHTML = "Please enter a valid email address";
+                email.classList.add("error-border");
+                errorFlag = true;
+            } else {
+                document.getElementById("email-error").innerHTML = "";
+                email.classList.remove("error-border");
+            }
+
+            if (website.value === "") {
+                document.getElementById("website-error").innerHTML = "A valid URL is required";
+                website.classList.add("error-border");
+                errorFlag = true;
+            } else if (!validateURL(website.value)) {
+                document.getElementById("website-error").innerHTML = "Please enter a valid URL";
+                website.classList.add("error-border");
+                errorFlag = true;
+            } else {
+                document.getElementById("website-error").innerHTML = "";
+                website.classList.remove("error-border");
+            }
+
+            if (message.value === "") {
+                document.getElementById("message-error").innerHTML = "This field is required";
+                message.classList.add("error-border");
+                errorFlag = true;
+            } else {
+                document.getElementById("message-error").innerHTML = "";
+                message.classList.remove("error-border");
+            }
+
+            if (errorFlag) {
+                return false; // Prevent form submission if there are validation errors
+            }
+
+            // You can proceed with form submission or other actions here
+            return true;
+        }
+
+        function validateEmail(email) {
+            var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return emailPattern.test(email);
+        }
+
+        function validateURL(url) {
+            // Basic URL validation pattern
+            var urlPattern = /^(ftp|http|https):\/\/[^ "]+$/;
+            return urlPattern.test(url);
+        }
+    </script>
+</head>
+<body>
+    <form onsubmit="return validateForm();" action="#" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        <span class="error-message" id="name-error"></span><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+        <span class="error-message" id="email-error"></span><br><br>
+
+        <label for="website">Website:</label>
+        <input type="url" id="website" name="website">
+        <span class="error-message" id="website-error"></span><br><br>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message"></textarea>
+        <span class="error-message" id="message-error"></span><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
